@@ -1,0 +1,45 @@
+'use strict';
+
+const { INTEGER } = require('sequelize');
+
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('products', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
+      name: {
+        type: Sequelize.STRING,
+      },
+      description: {
+        type: Sequelize.STRING,
+      },
+      price: {
+        type: Sequelize.INTEGER,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      categoryId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'categories',
+          key: 'id',
+          as: 'categoryId',
+        },
+      },
+    });
+  },
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('products');
+  },
+};
